@@ -32,15 +32,15 @@ class Route
                     self::classNotFound($controlargs[0]);
                 }
                 $controller = new $controller;
+                //pass as variables
+                $matches = array_slice($matches, 1);
+                $matches = array_combine(array_keys($matches_data), $matches);
                 $controller->{$controlargs[1]}(
-                    new Request
+                    new Request,
+                    $matches
                 );
             } else {
-                //if $uri match /
-                if (Request::uri() != "/") {
-                    //404
-                    self::notFound();
-                }
+                self::notFound();
             }
         } else {
             //check if url is equal to uri
@@ -56,11 +56,8 @@ class Route
                     new Request
                 );
             } else {
-                //if $uri match /
-                if (Request::uri() != "/") {
-                    //404
-                    self::notFound();
-                }
+                //404
+                self::notFound();
             }
         }
     }

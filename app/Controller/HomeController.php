@@ -23,6 +23,8 @@ class HomeController
     //blog
     public function blog(Request $request, $args)
     {
-        echo 'blog';
+        echo '<pre>';
+        var_dump($args);
+        echo '</pre>';
     }
 }
