@@ -6,11 +6,23 @@ use App\Core\Request;
 
 class Route
 {
+    public static $uri;
+    public static function route()
+    {
+        $route = [
+            '/',
+            '/blog/{id}/{title}',
+            '/blog/{id}/{title}/{slug}',
+            '/about-us'
+        ];
+        return $route;
+    }
     //validate uri
     public static function validateURL($uri, $controlargs = [])
     {
+        $route = self::route();
+        self::$uri = $uri;
         //check if url has parameters and use as variables
-        self::saveSession($uri);
         if (preg_match_all('/\{([a-zA-Z0-9]+)\}/', $uri, $matches)) {
             //convert to dynamic regex
             $uri = preg_replace('/\{([a-zA-Z0-9]+)\}/', '([a-zA-Z0-9]+)', $uri);
@@ -39,6 +51,9 @@ class Route
                     new Request,
                     $matches
                 );
+            } else if (preg_grep($uri, $route)) {
+                //do nothing
+                echo 'do nothing';
             } else {
                 self::notFound();
             }
@@ -55,8 +70,9 @@ class Route
                 $controller->{$controlargs[1]}(
                     new Request
                 );
+            } else if (in_array(self::$uri, $route)) {
+                //do nothing
             } else {
-                //404
                 self::notFound();
             }
         }
@@ -119,13 +135,19 @@ class Route
         self::validateURL($uri, $controlargs);
     }
 
+    /*
+    * Check if route is valid
+    * @return bool
+    */
+    public static function routeValid()
+    {
+        $session = Session::get('uri', []);
+    }
+
     //404
     public static function notFound()
     {
-        if (!Session::routeValid()) {
-            echo "404 <br>";
-            // exit;
-        }
+        echo "404";
     }
 
     //404 header

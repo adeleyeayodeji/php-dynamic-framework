@@ -83,12 +83,4 @@ class Session
             return false;
         }
     }
-
-    //routeValid
-    public static function routeValid()
-    {
-        $session = Session::get('uri', []);
-        //if Request::uri() in array of session
-
-    }
 }
