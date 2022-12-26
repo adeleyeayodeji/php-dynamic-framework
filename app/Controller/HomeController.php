@@ -27,4 +27,10 @@ class HomeController
         var_dump($args);
         echo '</pre>';
     }
+
+    //contact
+    public function contact(Request $request)
+    {
+        echo '<h1>How are you?</h1>';
+    }
 }

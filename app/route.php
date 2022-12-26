@@ -1,10 +1,17 @@
 <?php
 
+use App\Core\Request;
 use App\Core\Route;
 
+$route = new Route;
 //home
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/blog/{id}/{title}', [HomeController::class, 'blog']);
-Route::get('/blog/{id}/{title}/{slug}', [HomeController::class, 'blog']);
+$route::get('/', [HomeController::class, 'index']);
+$route::get('/blog/{id}/{title}', [HomeController::class, 'blog']);
+$route::get('/blog/{id}/{title}/{slug}', [HomeController::class, 'blog']);
 //about us
-Route::get('/about-us', [HomeController::class, 'about']);
+$route::get('/about-us', [HomeController::class, 'about']);
+//contact us
+$route::get('/contact-us', [HomeController::class, 'contact']);
+
+//run
+$route::run();
